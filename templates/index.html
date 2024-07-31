@@ -5,18 +5,22 @@
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 <body>
-    <h1>QA Chatbot</h1>
-    <form method="post">
-        <label for="context">Context:</label><br>
-        <textarea id="context" name="context" rows="4" cols="50">{{ context }}</textarea><br><br>
-        <label for="question">Question:</label><br>
-        <input type="text" id="question" name="question" value="{{ question }}"><br><br>
-        <input type="submit" value="Get Answer">
-    </form>
-
-    {% if answer %}
-    <h2>Answer:</h2>
-    <p>{{ answer }}</p>
-    {% endif %}
+    <div class="chat-container">
+        <h1>QA Chatbot</h1>
+        <div class="chat-box">
+            <div class="chat-log" id="chat-log">
+                {% for message in chat_history %}
+                    <div class="chat-message {{ message.role }}">
+                        <strong>{{ message.role | capitalize }}:</strong> {{ message.text }}
+                    </div>
+                {% endfor %}
+            </div>
+            <form method="post">
+                <textarea id="context" name="context" placeholder="Enter context..." rows="2">{{ context }}</textarea>
+                <input type="text" id="question" name="question" placeholder="Enter your question..." value="{{ question }}">
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
 </body>
 </html>
